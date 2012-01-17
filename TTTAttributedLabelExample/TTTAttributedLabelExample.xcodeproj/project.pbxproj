@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DCE562D614C538750064D3B6 /* teas.txt in Resources */ = {isa = PBXBuildFile; fileRef = DCE562D514C538750064D3B6 /* teas.txt */; };
 		F877A36113782AF10022A8AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F877A36013782AF10022A8AB /* UIKit.framework */; };
 		F877A36313782AF10022A8AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F877A36213782AF10022A8AB /* Foundation.framework */; };
 		F877A36513782AF10022A8AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F877A36413782AF10022A8AB /* CoreGraphics.framework */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DCE562D514C538750064D3B6 /* teas.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teas.txt; sourceTree = "<group>"; };
 		F877A35C13782AF10022A8AB /* Espressos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Espressos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F877A36013782AF10022A8AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F877A36213782AF10022A8AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -103,6 +105,7 @@
 				F877A36D13782AF10022A8AB /* main.m */,
 				F877A36813782AF10022A8AB /* Info.plist */,
 				F877A3A1137833EB0022A8AB /* espressos.txt */,
+				DCE562D514C538750064D3B6 /* teas.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F877A3A2137833EB0022A8AB /* espressos.txt in Resources */,
+				DCE562D614C538750064D3B6 /* teas.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
