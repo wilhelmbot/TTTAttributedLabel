@@ -45,19 +45,6 @@ static inline NSRegularExpression * ParenthesisRegularExpression() {
     return __parenthesisRegularExpression;
 }
 
-// Regular expressions for Markdown syntax
-
-// Brackets and backreferences in regular expressions: http://bit.ly/cKNVA
-static NSRegularExpression *__markdownBoldRegex;
-static inline NSRegularExpression * MarkdownBoldRegex() {
-    if (!__markdownBoldRegex) {
-        // From MDKStringConverter.m at https://github.com/csm/MarkdownKit
-        __markdownBoldRegex = [[NSRegularExpression alloc] initWithPattern:@"(\\*\\*|__)(?=\\S)([^\\r]*?\\S[*_]*)\\1" options:NSRegularExpressionCaseInsensitive error:nil];
-    }
-    
-    return __markdownBoldRegex;
-}
-
 @implementation AttributedTableViewCell
 @synthesize summaryText = _summaryText;
 @synthesize summaryLabel = _summaryLabel;
@@ -93,72 +80,46 @@ static inline NSRegularExpression * MarkdownBoldRegex() {
     [super dealloc];
 }
 
-- (void)setSummaryText:(NSString *)text 
-{
+- (void)setSummaryText:(NSString *)text {
     [self willChangeValueForKey:@"summaryText"];
     [_summaryText release];
     _summaryText = [text copy];
     [self didChangeValueForKey:@"summaryText"];
     
-    [self.summaryLabel setText:_summaryText];
-}
-
-// Wilhelmbot's implementation
-
-- (void)styleLabel:(TTTAttributedLabel *)label usingMarkupLanguage:(TTTAttributedLabelMarkupLanguage)language
-{
-    if (language == TTTAttributedLabelMarkupLanguageMattt) {
-        [label setText:label.text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-            NSRange stringRange = NSMakeRange(0, [mutableAttributedString length]);
-            
-            NSRegularExpression *regexp = NameRegularExpression();
-            NSRange nameRange = [regexp rangeOfFirstMatchInString:[mutableAttributedString string] options:0 range:stringRange];
-            UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:kSummaryTextFontSize]; 
-            CTFontRef boldFont = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
-            if (boldFont) {
-                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)boldFont range:nameRange];
-                CFRelease(boldFont);
-            }
-            
-            [mutableAttributedString replaceCharactersInRange:nameRange withString:[[[mutableAttributedString string] substringWithRange:nameRange] uppercaseString]];
-            
-            regexp = ParenthesisRegularExpression();
-            [regexp enumerateMatchesInString:[mutableAttributedString string] options:0 range:stringRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {            
-                UIFont *italicSystemFont = [UIFont italicSystemFontOfSize:kSummaryTextFontSize];
-                CTFontRef italicFont = CTFontCreateWithName((CFStringRef)italicSystemFont.fontName, italicSystemFont.pointSize, NULL);
-                if (italicFont) {
-                    [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)italicFont range:result.range];
-                    CFRelease(italicFont);
-                    
-                    [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[UIColor grayColor] CGColor] range:result.range];
-                }
-            }];
-            
-            return mutableAttributedString;
-        }];
+    [self.summaryLabel setText:self.summaryText afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
+        NSRange stringRange = NSMakeRange(0, [mutableAttributedString length]);
         
         NSRegularExpression *regexp = NameRegularExpression();
-        NSRange linkRange = [regexp rangeOfFirstMatchInString:label.text options:0 range:NSMakeRange(0, [label.text length])];
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://en.wikipedia.org/wiki/%@", [label.text substringWithRange:linkRange]]];
-        [label addLinkToURL:url withRange:linkRange];
-    } else if (language == TTTAttributedLabelMarkupLanguageMarkdown) {        
-        [label setText:label.text afterInheritingLabelAttributesAndConfiguringWithBlock:^NSMutableAttributedString *(NSMutableAttributedString *mutableAttributedString) {
-            NSRange stringRange = NSMakeRange(0, [mutableAttributedString length]);
-
-            NSRegularExpression *regexp = MarkdownBoldRegex();
-            NSRange nameRange = [regexp rangeOfFirstMatchInString:[mutableAttributedString string] options:0 range:stringRange];
-            UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:kSummaryTextFontSize];
-            CTFontRef boldFont = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
-            if (boldFont) {
-                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)boldFont range:nameRange];
-                CFRelease(boldFont);
+        NSRange nameRange = [regexp rangeOfFirstMatchInString:[mutableAttributedString string] options:0 range:stringRange];
+        UIFont *boldSystemFont = [UIFont boldSystemFontOfSize:kSummaryTextFontSize]; 
+        CTFontRef boldFont = CTFontCreateWithName((CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        if (boldFont) {
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)boldFont range:nameRange];
+            CFRelease(boldFont);
+        }
+        
+        [mutableAttributedString replaceCharactersInRange:nameRange withString:[[[mutableAttributedString string] substringWithRange:nameRange] uppercaseString]];
+        
+        regexp = ParenthesisRegularExpression();
+        [regexp enumerateMatchesInString:[mutableAttributedString string] options:0 range:stringRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {            
+            UIFont *italicSystemFont = [UIFont italicSystemFontOfSize:kSummaryTextFontSize];
+            CTFontRef italicFont = CTFontCreateWithName((CFStringRef)italicSystemFont.fontName, italicSystemFont.pointSize, NULL);
+            if (italicFont) {
+                [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(id)italicFont range:result.range];
+                CFRelease(italicFont);
+                
+                [mutableAttributedString addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[UIColor grayColor] CGColor] range:result.range];
             }
-
-            return mutableAttributedString;
         }];
-    }
+                
+        return mutableAttributedString;
+    }];
+    
+    NSRegularExpression *regexp = NameRegularExpression();
+    NSRange linkRange = [regexp rangeOfFirstMatchInString:self.summaryText options:0 range:NSMakeRange(0, [self.summaryText length])];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://en.wikipedia.org/wiki/%@", [self.summaryText substringWithRange:linkRange]]];
+    [self.summaryLabel addLinkToURL:url withRange:linkRange];
 }
-
 
 + (CGFloat)heightForCellWithText:(NSString *)text {
     CGFloat height = 10.0f;

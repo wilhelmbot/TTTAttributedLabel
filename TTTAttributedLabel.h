@@ -32,12 +32,6 @@ typedef enum {
     TTTAttributedLabelVerticalAlignmentBottom   = 2,
 } TTTAttributedLabelVerticalAlignment;
 
-typedef enum { 
-    TTTAttributedLabelMarkupLanguageMattt,
-    TTTAttributedLabelMarkupLanguageMarkdown,
-    TTTAttributedLabelMarkupLanguageTextile
-} TTTAttributedLabelMarkupLanguage;
-
 @protocol TTTAttributedLabelDelegate;
 
 // Override UILabel @property to accept both NSString and NSAttributedString

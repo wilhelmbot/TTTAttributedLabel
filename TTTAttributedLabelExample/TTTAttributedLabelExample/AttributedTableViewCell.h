@@ -21,7 +21,8 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "TTTAttributedLabel.h"
+
+@class TTTAttributedLabel;
 
 @interface AttributedTableViewCell : UITableViewCell {
     NSString *_summaryText;
@@ -32,6 +33,5 @@
 @property (nonatomic, retain) TTTAttributedLabel *summaryLabel;
 
 + (CGFloat)heightForCellWithText:(NSString *)text;
-- (void)styleLabel:(TTTAttributedLabel *)label usingMarkupLanguage:(TTTAttributedLabelMarkupLanguage)language;
 
 @end
