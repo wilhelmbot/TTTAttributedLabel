@@ -25,8 +25,10 @@
 
 @interface RootViewController : UITableViewController <TTTAttributedLabelDelegate, UIActionSheetDelegate> {
     NSArray *_espressos;
+    NSArray *_teas;
 }
 
 @property (nonatomic, retain) NSArray *espressos;
+@property (nonatomic, retain) NSArray *teas;
 
 @end

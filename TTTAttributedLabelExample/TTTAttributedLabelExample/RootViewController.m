@@ -26,6 +26,7 @@
 
 @implementation RootViewController
 @synthesize espressos = _espressos;
+@synthesize teas = _teas;
 
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
@@ -33,14 +34,17 @@
         return nil;
     }
     
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"espressos" ofType:@"txt"];
-    self.espressos = [[NSString stringWithContentsOfFile:filePath usedEncoding:nil error:nil] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-        
+    NSString *espressosFilePath = [[NSBundle mainBundle] pathForResource:@"espressos" ofType:@"txt"];
+    self.espressos = [[NSString stringWithContentsOfFile:espressosFilePath usedEncoding:nil error:nil] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    NSString *teasFilePath = [[NSBundle mainBundle] pathForResource:@"teas" ofType:@"md"];
+    self.teas = [[NSString stringWithContentsOfFile:teasFilePath usedEncoding:nil error:nil] componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
     return self;
 }
 
 - (void)dealloc {
     [_espressos release];
+    [_teas release];
     [super dealloc];
 }
 
@@ -49,18 +53,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Espressos", nil);
+    self.title = NSLocalizedString(@"Espressos & Teas", nil);
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
 }
 
 #pragma mark - UITableViewDatasource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.espressos count];
+    if (section == 0) {
+        return [self.espressos count];
+    } else if (section == 1) {
+        return [self.teas count];
+    }
+    
+    return 0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"Espressos";
+    } else if (section == 1) {
+        return @"Teas (Styled using Markdown)";
+    }
+    
+    return nil;    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [AttributedTableViewCell heightForCellWithText:[self.espressos objectAtIndex:indexPath.row]];
+    if (indexPath.section == 0) {
+        return [AttributedTableViewCell heightForCellWithText:[self.espressos objectAtIndex:indexPath.row]];
+    } else if (indexPath.section == 1) {
+        return [AttributedTableViewCell heightForCellWithText:[self.teas objectAtIndex:indexPath.row]];
+    }
+    
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -71,8 +101,15 @@
         cell = [[[AttributedTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    NSString *description = [self.espressos objectAtIndex:indexPath.row];
-    cell.summaryText = description;
+    if (indexPath.section == 0) {
+        cell.summaryText = [self.espressos objectAtIndex:indexPath.row];
+    } else if (indexPath.section == 1) {
+        [cell.summaryLabel setTextWithMarkdownString:[self.teas objectAtIndex:indexPath.row]];
+    } else {
+        NSLog(@"%@ : I wasn't expecting section number %d", __PRETTY_FUNCTION__, indexPath.section);
+        return cell;
+    }
+    
     cell.summaryLabel.delegate = self;
     cell.summaryLabel.userInteractionEnabled = YES;
 
