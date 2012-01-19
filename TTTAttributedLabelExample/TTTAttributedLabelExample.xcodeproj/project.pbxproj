@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DC04F14414C66B0600950097 /* teas.md in Resources */ = {isa = PBXBuildFile; fileRef = DC04F14314C66B0600950097 /* teas.md */; };
+		DC458C2214C7D141000043A5 /* TTTAttributedLabel+Markdown.m in Sources */ = {isa = PBXBuildFile; fileRef = DC458C2114C7D141000043A5 /* TTTAttributedLabel+Markdown.m */; };
 		F877A36113782AF10022A8AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F877A36013782AF10022A8AB /* UIKit.framework */; };
 		F877A36313782AF10022A8AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F877A36213782AF10022A8AB /* Foundation.framework */; };
 		F877A36513782AF10022A8AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F877A36413782AF10022A8AB /* CoreGraphics.framework */; };
@@ -22,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		DC04F14314C66B0600950097 /* teas.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teas.md; sourceTree = "<group>"; };
+		DC458C2014C7D141000043A5 /* TTTAttributedLabel+Markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TTTAttributedLabel+Markdown.h"; sourceTree = "<group>"; };
+		DC458C2114C7D141000043A5 /* TTTAttributedLabel+Markdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TTTAttributedLabel+Markdown.m"; sourceTree = "<group>"; };
 		F877A35C13782AF10022A8AB /* Espressos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Espressos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F877A36013782AF10022A8AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F877A36213782AF10022A8AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -56,6 +59,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC458C1D14C7D0E2000043A5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC458C1F14C7D0F1000043A5 /* Markdown */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		DC458C1F14C7D0F1000043A5 /* Markdown */ = {
+			isa = PBXGroup;
+			children = (
+				DC458C2014C7D141000043A5 /* TTTAttributedLabel+Markdown.h */,
+				DC458C2114C7D141000043A5 /* TTTAttributedLabel+Markdown.m */,
+			);
+			name = Markdown;
+			sourceTree = "<group>";
+		};
 		F877A35113782AF10022A8AB = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +133,7 @@
 		F877A38313782B450022A8AB /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
 			children = (
+				DC458C1D14C7D0E2000043A5 /* Extensions */,
 				F877A38013782B360022A8AB /* TTTAttributedLabel.h */,
 				F877A38113782B360022A8AB /* TTTAttributedLabel.m */,
 			);
@@ -214,6 +235,7 @@
 				F877A37713782AF10022A8AB /* RootViewController.m in Sources */,
 				F877A38213782B360022A8AB /* TTTAttributedLabel.m in Sources */,
 				F877A39813782FF50022A8AB /* AttributedTableViewCell.m in Sources */,
+				DC458C2214C7D141000043A5 /* TTTAttributedLabel+Markdown.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

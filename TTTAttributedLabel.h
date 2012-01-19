@@ -237,8 +237,6 @@ typedef enum {
 
 @end
 
-#pragma mark - TTTAttributedLabelDelegate
-
 /**
  The `TTTAttributedLabelDelegate` protocol defines the messages sent to an attributed label delegate when links are tapped. All of the methods of this protocol are optional.
  */
@@ -290,41 +288,4 @@ typedef enum {
  @param duration The duration, in seconds from the date for the selected link.
  */
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithDate:(NSDate *)date timeZone:(NSTimeZone *)timeZone duration:(NSTimeInterval)duration;
-@end
-
-#pragma mark - TTTAttributedLabel Markup Language Extensions
-
-/**
- The following extensions for `TTTAttributedLabel` implement special parsing operations to handle well-known markup languages.
- 
- Unlike `TTTAttributedLabel`, these extensions handle the styling automatically by parsing the text content using a specific markup language. 
- */
-@interface TTTAttributedLabel (Markdown)
-///-------------------------------------------------------------------------------------
-/// @name Setting it as the Text Attribute and applying style using the Markdown syntax 
-///-------------------------------------------------------------------------------------
-
-/**
- Parses the text using the Markdown syntax (http://daringfireball.net/projects/markdown/), adds style and sets the text property for the label. 
- 
- @param text An `NSString` or `NSAttributedString` object to be displayed by the label. If the specified text is an `NSString`, the label will display the text like a `UILabel`, inheriting the text styles of the label. If the specified text is an `NSAttributedString`, the label text styles will be overridden by the styles specified in the attributed string.
- 
- @discussion This method overrides `UILabel -setText:` to accept both `NSString` and `NSAttributedString` objects. This string is `nil` by default.
- */
-- (void)setTextWithMarkdownString:(NSString *)markdownString;
-@end
-
-@interface TTTAttributedLabel (Textile)
-///------------------------------------------------------------------------------------
-/// @name Setting it as the Text Attribute and applying style using the Textile syntax 
-///------------------------------------------------------------------------------------
-
-/**
- Parses the text using the Textile syntax (http://textile.thresholdstate.com/), adds style and sets the text property for the label. 
- 
- @param text An `NSString` or `NSAttributedString` object to be displayed by the label. If the specified text is an `NSString`, the label will display the text like a `UILabel`, inheriting the text styles of the label. If the specified text is an `NSAttributedString`, the label text styles will be overridden by the styles specified in the attributed string.
- 
- @discussion This method overrides `UILabel -setText:` to accept both `NSString` and `NSAttributedString` objects. This string is `nil` by default.
- */
-- (void)setTextWithTextileString:(NSString *)textileString;
 @end

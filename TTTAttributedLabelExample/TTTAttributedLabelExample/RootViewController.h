@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "TTTAttributedLabel.h"
+#import "TTTAttributedLabel+Markdown.h"
 
 @interface RootViewController : UITableViewController <TTTAttributedLabelDelegate, UIActionSheetDelegate> {
     NSArray *_espressos;
